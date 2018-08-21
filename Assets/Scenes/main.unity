@@ -253,8 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b16bad3732fcd4dad32cb2b929438c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Radius: 10
-  _NumOfTree: 100
+  radius: 10
+  numOfTree: 100
   tree: {fileID: 114418, guid: be878d9ea17907f4a8068678a5ce7908, type: 2}
 --- !u!1 &258723522
 GameObject:
@@ -506,7 +506,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 503453815}
-  - component: {fileID: 503453816}
   - component: {fileID: 503453814}
   m_Layer: 0
   m_Name: GameController
@@ -526,16 +525,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652161497917bc94eb392e33a5a9db34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _NumOfWaves: 5
-  _SecondsPerWave: 30
-  _OriginEnemyAmount: 10
-  _EnemyPlusPerWave: 10
-  _NowWave: 0
-  _WaveTimer: 0
-  _TimeForSpawnEnemy: 0
-  _EnemySpawnTimer: 0
-  _WaveText: {fileID: 486417910}
-  _WaveCountDownText: {fileID: 2120049117}
+  numOfWaves: 5
+  secondsPerWave: 30
+  originEnemyAmount: 10
+  enemyPlusPerWave: 10
+  nowWave: 0
+  waveTimer: 0
+  timeForSpawnEnemy: 0
+  enemySpawnTimer: 0
+  waveText: {fileID: 486417910}
+  waveCountDownText: {fileID: 2120049117}
 --- !u!4 &503453815
 Transform:
   m_ObjectHideFlags: 0
@@ -551,54 +550,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &503453816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 503453813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  queueAhead: 1
-  useRecommendedMSAALevel: 0
-  _monoscopic: 0
-  enableAdaptiveResolution: 0
-  minRenderScale: 0.7
-  maxRenderScale: 1
-  expandMixedRealityCapturePropertySheet: 0
-  enableMixedReality: 0
-  compositionMethod: 0
-  extraHiddenLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  capturingCameraDevice: 0
-  flipCameraFrameHorizontally: 0
-  flipCameraFrameVertically: 0
-  handPoseStateLatency: 0
-  sandwichCompositionRenderLatency: 0
-  sandwichCompositionBufferedFrames: 8
-  chromaKeyColor: {r: 0, g: 1, b: 0, a: 1}
-  chromaKeySimilarity: 0.6
-  chromaKeySmoothRange: 0.03
-  chromaKeySpillRange: 0.06
-  useDynamicLighting: 0
-  depthQuality: 1
-  dynamicLightingSmoothFactor: 8
-  dynamicLightingDepthVariationClampingValue: 0.001
-  virtualGreenScreenType: 0
-  virtualGreenScreenTopY: 10
-  virtualGreenScreenBottomY: -10
-  virtualGreenScreenApplyDepthCulling: 0
-  virtualGreenScreenDepthTolerance: 0.2
-  _trackingOriginType: 0
-  usePositionTracking: 1
-  useRotationTracking: 1
-  useIPDInPositionTracking: 1
-  resetTrackerOnLoad: 0
-  AllowRecenter: 1
 --- !u!1 &653657323
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,14 +808,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea3ed9c0292d6347b04de530efd0276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Hp: 100
-  _DamegeValue: 5
-  _MaxEnergy: 100
-  _Energy: 0
-  _LaserBeam: {fileID: 1664648584}
-  _IsShootable: 0
-  _HpBar: {fileID: 1507672305}
-  _EnergyBar: {fileID: 987596737}
+  hp: 100
+  damegeValue: 5
+  maxEnergy: 100
+  energy: 0
+  laserBeam: {fileID: 1664648584}
+  isShootable: 0
+  hpBar: {fileID: 1507672305}
+  energyBar: {fileID: 987596737}
 --- !u!136 &898764774
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1650,7 +1601,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1544459418
+  randomSeed: 1824822152
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4975,8 +4926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27c07b67e0037049a7c7c01e6904041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxDistance: 100
-  damageUI: {fileID: 1104741078274720, guid: 85c244b9ac785884e9f2131e25dc9caa, type: 2}
+  maxDistance: 100
+  damageEffectOBJ: {fileID: 1521091237615696, guid: 1612719352623b64aad6e6c82d9bb699,
+    type: 2}
 --- !u!4 &1683115346 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
@@ -5021,7 +4973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d03cac1b7842a4b91cf054eed6cdf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _EnemyPrafbs:
+  enemyPrafbs:
   - {fileID: 1377492532307794, guid: 03652d7ff3f38cb4592dffe448d130f6, type: 2}
 --- !u!1 &1776935648
 GameObject:
