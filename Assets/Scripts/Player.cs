@@ -9,6 +9,15 @@ using UnityEngine.UI;
 /// </summary>
 public class Player : MonoBehaviour
 {
+    //Player状態
+    [SerializeField]
+    private PlayerState playerState = PlayerState.ModelMode;
+    enum PlayerState
+    {
+        GameMode,
+        ModelMode
+    }
+
     //HP
     [SerializeField]
     private int hp = 100;
@@ -30,7 +39,7 @@ public class Player : MonoBehaviour
 
     //ビーム
     [SerializeField]
-    private Beam laserBeam;
+    private Beam beam;
     //発射できるか？
     [SerializeField]
     private bool isShootable = false;
@@ -45,6 +54,7 @@ public class Player : MonoBehaviour
     private Slider hpBar;
     [SerializeField]
     private Slider energyBar;
+
 
     void Awake()
     {
@@ -62,13 +72,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hpBar.value = hp;
-        energyBar.value = energy;
+        switch (playerState)
+        {
+            case PlayerState.GameMode:
+                hpBar.value = hp;
+                energyBar.value = energy;
 
+                isShootable = energy <= 0 ? false : true;
+                LaserBeam();
+                break;
 
-        isShootable = energy <= 0 ? false : true;
+            case PlayerState.ModelMode:
+                break;
+        }
 
-        LaserBeam();
     }
 
     public void Damage()
@@ -76,7 +93,7 @@ public class Player : MonoBehaviour
         hp -= damegeValue;
     }
 
-    public void LaserBeam()
+    private void LaserBeam()
     {
         if (isShootable)
         {
@@ -102,7 +119,7 @@ public class Player : MonoBehaviour
     private void ShootBeam()
     {
         //ビームパーティクルシステムを起動
-        laserBeam.LaserParticleSystem.Play();
+        beam.LaserParticleSystem.Play();
         //エネルギー消費
         energy -= Time.deltaTime * 10;
         if (energy <= 0)
@@ -122,7 +139,7 @@ public class Player : MonoBehaviour
         if (!isLaserStoped)
         {
             //ビームパーティクルシステムを停止
-            laserBeam.LaserParticleSystem.Stop();
+            beam.LaserParticleSystem.Stop();
             isLaserStoped = true;
         }
         else

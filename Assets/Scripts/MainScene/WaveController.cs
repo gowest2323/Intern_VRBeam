@@ -40,13 +40,19 @@ public class WaveController : MonoBehaviour
     private float enemySpawnTimer = 0;
 
     //WAVE状態
-    enum WaveState
+    public enum WaveState
     {
+        Waiting,
         WaveStandBy,
         WaveStart,
-        WaveFinish
+        AllWaveFinish
     }
-    private WaveState waveState = WaveState.WaveStandBy;
+    private WaveState waveState = WaveState.Waiting;
+    public WaveState NowWaveState
+    {
+        get { return waveState; }
+        set { waveState = value; }
+    }
 
     private EnemySpawn enemySpawn;
     private Player player;
@@ -76,6 +82,11 @@ public class WaveController : MonoBehaviour
     {
         switch (waveState)
         {
+            case WaveState.Waiting:
+                waveText.text = "WAVE : " + nowWave + "/5";
+                waveTimer = secondsPerWave;
+                break;
+
             case WaveState.WaveStandBy:
                 nowWave++;
                 if (nowWave <= numOfWaves)
@@ -87,7 +98,7 @@ public class WaveController : MonoBehaviour
                 }
                 else
                 {
-                    waveState = WaveState.WaveFinish;
+                    waveState = WaveState.AllWaveFinish;
                 }
                 break;
 
@@ -96,22 +107,10 @@ public class WaveController : MonoBehaviour
                 EnemySpawnPerTime(timeForSpawnEnemy);
                 break;
 
-            case WaveState.WaveFinish:
-                //全部のWAVE終了後の処理
-                if (player.Hp >= 0)
-                {
-                    //game clear
-                }
-                else
-                {
-                    //game over
-                }
-                break;
-
-            default:
+            case WaveState.AllWaveFinish:
+                //ここで処理をシーンコントローラーに移す
                 break;
         }
-
 	}
 
     /// <summary>
@@ -123,7 +122,7 @@ public class WaveController : MonoBehaviour
 
         if(player.Hp <= 0)
         {
-            waveState = WaveState.WaveFinish;
+            waveState = WaveState.AllWaveFinish;
         }
 
         if (waveTimer <= 0)
