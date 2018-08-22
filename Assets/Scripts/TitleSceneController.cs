@@ -25,8 +25,8 @@ public class TitleSceneController : SceneController
         {
             case SceneState.Defalt:
                 //頭を注目して
-
-                if (Input.GetKeyDown(KeyCode.P))
+                if(eyeTracking.IsNowLookingItemSelect &&
+                    eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.GameStart)
                 {
                     isNowSceneFinish = true;
                 }

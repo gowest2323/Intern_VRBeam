@@ -57,11 +57,7 @@ public class ResultSceneController : SceneController
                 else if(end == "GameOver")
                 {
                 }
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    isNowSceneFinish = true;
-                }
+                CheckIsOneMorePlay();
                 break;
         }
     }
@@ -80,6 +76,25 @@ public class ResultSceneController : SceneController
         else
         {
             Debug.Log("エンドが保存してない");
+        }
+    }
+
+    private void CheckIsOneMorePlay()
+    {
+        if (eyeTracking.IsNowLookingItemSelect)
+        {
+            //ONEMORE? -> YES
+            if (eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.Yes)
+            {
+                gameLoad.NextScene = GameLoad.Scenes.Main;
+                isNowSceneFinish = true;
+            }
+            //ONEMORE? -> NO
+            else if (eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.No)
+            {
+                gameLoad.NextScene = GameLoad.Scenes.Title;
+                isNowSceneFinish = true;
+            }
         }
     }
 

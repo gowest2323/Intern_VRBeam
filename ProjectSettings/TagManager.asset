@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
-  - Enemy
-  - FieldItem
   - FadeController
+  - Ground
+  - FieldItem
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,12 +17,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ethan
+  - MazeWalls
+  - MazeTurret
+  - MazeTurretBullet
+  - Bg
+  - FPSWeapon
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GUI
+    uniqueID: 2379361113
     locked: 0

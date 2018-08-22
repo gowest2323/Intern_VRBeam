@@ -31,12 +31,16 @@ public class SceneController : MonoBehaviour
         CheckEnd    //リザルトシーン用エンディング条件チェック
     }
 
+    [HideInInspector]
+    public EyeTracking eyeTracking;
+
 
     // Use this for initialization
     public virtual void Start ()
     {
         fadeController = GameObject.FindGameObjectWithTag("FadeController").GetComponent<FadeController>();
         gameLoad = GetComponent<GameLoad>();
+        eyeTracking = GetComponent<EyeTracking>();
     }
 
     // Update is called once per frame
