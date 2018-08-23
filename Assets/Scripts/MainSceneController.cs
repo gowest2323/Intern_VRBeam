@@ -12,6 +12,8 @@ public class MainSceneController : SceneController
     //Waveコントローラー
     private WaveController waveController;
 
+    private AudioSource audioSource;
+
     // Use this for initialization
     public override void Start()
     {
@@ -19,6 +21,7 @@ public class MainSceneController : SceneController
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         waveController = GetComponent<WaveController>();
+        audioSource = GetComponent<AudioSource>();
 
         //エンディング初期化
         if (PlayerPrefs.HasKey(endingPrefsKey))
@@ -40,6 +43,7 @@ public class MainSceneController : SceneController
             case SceneState.Defalt:
                 if (waveController.NowWaveState == WaveController.WaveState.Waiting)
                 {
+                    audioSource.Play();
                     waveController.NowWaveState = WaveController.WaveState.WaveStandBy;
                 }
 

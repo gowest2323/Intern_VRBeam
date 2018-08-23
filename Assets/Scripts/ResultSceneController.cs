@@ -14,12 +14,14 @@ public class ResultSceneController : SceneController
     private Transform resultTextTrfm;
     [SerializeField]
     private Sprite[] endMats;
+    private Player player;
 
 	// Use this for initialization
 	public override void Start ()
     {
         base.Start();
         sceneState = SceneState.CheckEnd;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -41,22 +43,19 @@ public class ResultSceneController : SceneController
                 if (end == "GameClear")
                 {
                     resultTextTrfm.GetComponent<SpriteRenderer>().sprite = endMats[0];
+                    //Idle
+                    player.PlayerAnim.SetInteger("AnimIndex", 2);
                 }
                 else if (end == "GameOver")
                 {
                     resultTextTrfm.GetComponent<SpriteRenderer>().sprite = endMats[1];
+                    //AOQ_Idle
+                    player.PlayerAnim.SetInteger("AnimIndex", 18);
                 }
                 sceneState = SceneState.SceneStart;
                 break;
 
             case SceneState.Defalt:
-                //Endに沿って演出を変更
-                if(end == "GameClear")
-                {
-                }
-                else if(end == "GameOver")
-                {
-                }
                 CheckIsOneMorePlay();
                 break;
         }

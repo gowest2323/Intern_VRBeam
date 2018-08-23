@@ -6,17 +6,21 @@ public class Fire : MonoBehaviour
 {
     //表示継続時間
     [SerializeField]
-    private float liveTime = 5.0f;
+    private float liveTime = 2.0f;
     //Destroyメソッド呼んだか？
     private bool isCallDestory = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    private AudioSource audioSource;
+
+    // Use this for initialization
+    void Start ()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         DestroySelfWhenTimeUp();
     }
@@ -27,6 +31,15 @@ public class Fire : MonoBehaviour
         {
             Destroy(this.gameObject, liveTime);
             isCallDestory = true;
+        }
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.gameObject.tag == "Enemy")//敵に当たった
+        {
+            audioSource.Play();
+            Destroy(other.gameObject);
         }
     }
 }

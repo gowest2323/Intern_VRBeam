@@ -34,18 +34,18 @@ public class EyeTracking : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        FindWhichToLook();
+        FindNowLookingItem();
         FillingSelectionBar();
 
         //  ゲージ満タンかつトリガーを押した
         if (selectionBar.GetComponent<Image>().fillAmount >= 1 &&
-            Input.GetKeyDown(KeyCode.A)/* OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)*/)
+            (Input.GetKeyDown(KeyCode.A) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)))
         {
             isNowLookingItemSelect = true;
         }
     }
 
-    private void FindWhichToLook()
+    private void FindNowLookingItem()
     {
         foreach(var item in itemForLook)
         {

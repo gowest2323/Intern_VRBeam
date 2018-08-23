@@ -27,12 +27,15 @@ public class Beam : MonoBehaviour
     [SerializeField]
     private GameObject damageEffectOBJ;
 
+    private AudioSource audioSource;
+
     // Use this for initialization
     void Awake ()
     {
         centerEyeAnchor = transform.parent;
         laserParticleSystem = GetComponent<ParticleSystem>();
         particleCollisionEvents = new List<ParticleCollisionEvent>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,9 +48,15 @@ public class Beam : MonoBehaviour
     /// ビームに撃たれた場所にダメージUIを表示
     /// </summary>
     /// <param name="pos"></param>
-    private void ShowDamage(Vector3 pos)
+    private void SpawnFire(Vector3 pos)
     {
-        Instantiate(damageEffectOBJ, pos, Quaternion.identity);
+        //生成しすぎないように制限する
+        Collider[] fires = Physics.OverlapSphere(pos, 0.2f, 1 << LayerMask.NameToLayer("Fire"));
+
+        if(fires.Length <= 0)
+        {
+            Instantiate(damageEffectOBJ, pos, Quaternion.identity);
+        }
     }
 
     /// <summary>
@@ -64,20 +73,20 @@ public class Beam : MonoBehaviour
             foreach(var colEvent in particleCollisionEvents)
             {
                 Vector3 pos = colEvent.intersection;
-                ShowDamage(pos);
+                SpawnFire(pos);
             }
         }
         else if(other.gameObject.tag == "Enemy")//敵に当たった
         {
+            //audioSource.Play();
             laserParticleSystem.GetCollisionEvents(other, particleCollisionEvents);
 
             foreach (var colEvent in particleCollisionEvents)
             {
                 Vector3 pos = colEvent.intersection;
-                ShowDamage(pos);
+                SpawnFire(pos);
             }
 
-            Destroy(other.gameObject);
         }
     }
 }

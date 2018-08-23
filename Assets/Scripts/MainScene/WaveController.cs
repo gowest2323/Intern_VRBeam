@@ -23,8 +23,6 @@ public class WaveController : MonoBehaviour
     private int enemyPlusPerWave= 10;
     //各WAVEの敵の数
     private List<int> enemysOfWaves;
-    //今のWAVEで生成した敵数
-    private int amountOfNowWaveSpawnedEnemy = 0;
 
     //今のWAVE数
     [SerializeField]
@@ -83,7 +81,7 @@ public class WaveController : MonoBehaviour
         switch (waveState)
         {
             case WaveState.Waiting:
-                waveText.text = "WAVE : " + nowWave + "/5";
+                waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
                 waveTimer = secondsPerWave;
                 break;
 
@@ -92,7 +90,7 @@ public class WaveController : MonoBehaviour
                 if (nowWave <= numOfWaves)
                 {
                     timeForSpawnEnemy = secondsPerWave / enemysOfWaves[nowWave - 1];
-                    waveText.text = "WAVE : " + nowWave + "/5";
+                    waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
                     waveTimer = secondsPerWave;
                     waveState = WaveState.WaveStart;
                 }
@@ -143,12 +141,7 @@ public class WaveController : MonoBehaviour
         enemySpawnTimer += Time.deltaTime;
         if(enemySpawnTimer >= spawnTime)
         {
-            if(amountOfNowWaveSpawnedEnemy == enemysOfWaves[nowWave])
-            {
-                return;
-            }
             enemySpawn.SpawnEnemyInRandomPos();
-            amountOfNowWaveSpawnedEnemy++;
             enemySpawnTimer = 0;
         }
     }

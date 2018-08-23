@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EditorCameraRotation : MonoBehaviour {
+public class EditorCameraRotation : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start ()
+    {
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -16,6 +17,7 @@ public class EditorCameraRotation : MonoBehaviour {
         if (Input.GetKey(KeyCode.RightArrow))
         {
             this.transform.Rotate(0, 1, 0);
+
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -29,6 +31,7 @@ public class EditorCameraRotation : MonoBehaviour {
         {
             this.transform.Rotate(1, 0, 0);
         }
+
 #endif
     }
 }

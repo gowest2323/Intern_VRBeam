@@ -48,6 +48,11 @@ public class Player : MonoBehaviour
 
     //アニメーター
     private Animator animator;
+    public Animator PlayerAnim
+    {
+        get { return animator; }
+        set { animator = value; }
+    }
 
     //UI
     [SerializeField]
@@ -55,12 +60,25 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Slider energyBar;
 
+    //MainCamera
+    [SerializeField]
+    private Transform mainCamera;
+
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip[] beamAudio;
+    private int beamClipNum = 0;
 
     void Awake()
     {
         animator = transform.GetComponent<Animator>();
 
-        if(SceneManager.GetActiveScene().name == "Title")
+        if(playerState == PlayerState.GameMode)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        if (SceneManager.GetActiveScene().name == "Title")
         {
             //Idle
             animator.SetInteger("AnimIndex", 2);
@@ -69,23 +87,32 @@ public class Player : MonoBehaviour
         energy = maxEnergy;
     }
 
+
+    float angle = 0.0F;
+    Vector3 axis = Vector3.zero;
     // Update is called once per frame
     void Update()
     {
         switch (playerState)
         {
             case PlayerState.GameMode:
+                ////現在VR状態は回転できない
+                //mainCamera.rotation.ToAngleAxis(out angle, out axis);
+                //axis = new Vector3(0, axis.y, 0);
+                //transform.rotation = Quaternion.AngleAxis(angle, axis);
+                //////////
+
                 hpBar.value = hp;
                 energyBar.value = energy;
 
                 isShootable = energy <= 0 ? false : true;
+
                 LaserBeam();
                 break;
 
             case PlayerState.ModelMode:
                 break;
         }
-
     }
 
     public void Damage()
@@ -98,18 +125,19 @@ public class Player : MonoBehaviour
         if (isShootable)
         {
             //トリガーをおしたら
-            if (Input.GetKey(KeyCode.Space)/*OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)*/)
+            if (/*Input.GetKey(KeyCode.Space) ||*/ OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))//トリガー長押し
             {
+                
                 ShootBeam();
             }
             else
             {
-                StopBeam();
+                StopAndChargeBeam();
             }
         }
         else
         {
-            StopBeam();
+            StopAndChargeBeam();
         }
     }
 
@@ -120,6 +148,7 @@ public class Player : MonoBehaviour
     {
         //ビームパーティクルシステムを起動
         beam.LaserParticleSystem.Play();
+
         //エネルギー消費
         energy -= Time.deltaTime * 10;
         if (energy <= 0)
@@ -134,7 +163,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// ビーム停止
     /// </summary>
-    private void StopBeam()
+    private void StopAndChargeBeam()
     {
         if (!isLaserStoped)
         {
@@ -144,8 +173,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //ボタン押してない時
-            if (!Input.GetKey(KeyCode.Space)/*OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)*/)
+#if UNITY_EDITOR
+            if (!Input.GetKey(KeyCode.Space))
             {
                 //エネルギー補給
                 energy += Time.deltaTime * 5;
@@ -154,6 +183,20 @@ public class Player : MonoBehaviour
                     energy = maxEnergy;
                 }
             }
+#endif
+
+
+            //ボタン押してない時
+            if (!OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
+            {
+                //エネルギー補給
+                energy += Time.deltaTime * 5;
+                if (energy >= maxEnergy)
+                {
+                    energy = maxEnergy;
+                }
+            }
+
         }
     }
 }
