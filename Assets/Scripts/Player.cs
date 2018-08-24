@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 /// <summary>
 /// プレイヤークラス
@@ -26,9 +26,6 @@ public class Player : MonoBehaviour
         get { return hp; }
         set { hp = value; }
     }
-    //敵に当たった時のダメージ
-    [SerializeField]
-    private int damegeValue = 5;
 
     //最大エネルギー
     [SerializeField]
@@ -62,21 +59,13 @@ public class Player : MonoBehaviour
 
     //MainCamera
     [SerializeField]
-    private Transform mainCamera;
-
-    private AudioSource audioSource;
+    private Transform cameraRig;
     [SerializeField]
-    private AudioClip[] beamAudio;
-    private int beamClipNum = 0;
+    private Transform centerEye;
 
     void Awake()
     {
         animator = transform.GetComponent<Animator>();
-
-        if(playerState == PlayerState.GameMode)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
 
         if (SceneManager.GetActiveScene().name == "Title")
         {
@@ -96,11 +85,7 @@ public class Player : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.GameMode:
-                ////現在VR状態は回転できない
-                //mainCamera.rotation.ToAngleAxis(out angle, out axis);
-                //axis = new Vector3(0, axis.y, 0);
-                //transform.rotation = Quaternion.AngleAxis(angle, axis);
-                //////////
+                RotateBody();
 
                 hpBar.value = hp;
                 energyBar.value = energy;
@@ -115,9 +100,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public void Damage(int damage)
     {
-        hp -= damegeValue;
+        hp -= damage;
     }
 
     private void LaserBeam()
@@ -127,7 +112,6 @@ public class Player : MonoBehaviour
             //トリガーをおしたら
             if (/*Input.GetKey(KeyCode.Space) ||*/ OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))//トリガー長押し
             {
-                
                 ShootBeam();
             }
             else
@@ -185,7 +169,6 @@ public class Player : MonoBehaviour
             }
 #endif
 
-
             //ボタン押してない時
             if (!OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
             {
@@ -196,7 +179,11 @@ public class Player : MonoBehaviour
                     energy = maxEnergy;
                 }
             }
-
         }
+    }
+
+    private void RotateBody()
+    {
+        transform.rotation = Quaternion.Euler(0.0f, centerEye.rotation.eulerAngles.y, 0.0f);
     }
 }

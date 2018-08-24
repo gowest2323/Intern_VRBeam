@@ -13,6 +13,16 @@ public class EnemySpawn : MonoBehaviour
     //敵生成リスト
     private List<Vector3> enemySpawnPosList;
 
+    enum EnemyType
+    {
+        Normal,
+        Strong
+    }
+
+    //強い敵の生成確率
+    [SerializeField]
+    private int percentForSpawnStrong = 30;
+
     	// Use this for initialization
 	void Start ()
     {
@@ -27,12 +37,25 @@ public class EnemySpawn : MonoBehaviour
     }
 
     /// <summary>
-    /// 位置リストからランダムの場所を取って敵をスポーンする
+    /// 敵をスポーンする
     /// </summary>
-    public void SpawnEnemyInRandomPos()
+    public void SpawnEnemy()
     {
+        //位置リストからランダムの場所を取って
         int randomIndex = Random.Range(0, enemySpawnPosList.Count);
+        //生成タイプパーセンテージ
+        int enemyTypePercentage = Random.Range(0, 100);
 
-        Instantiate(enemyPrafbs[0], enemySpawnPosList[randomIndex], Quaternion.identity);
+        if (enemyTypePercentage <= percentForSpawnStrong - 1)
+        {
+            //設定した確率でで強い敵生成
+            Instantiate(enemyPrafbs[(int)EnemyType.Strong], enemySpawnPosList[randomIndex], Quaternion.identity);
+        }
+        else
+        {
+            //ノーマル敵生成
+            Instantiate(enemyPrafbs[(int)EnemyType.Normal], enemySpawnPosList[randomIndex], Quaternion.identity);
+        }
+
     }
 }

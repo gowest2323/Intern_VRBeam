@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private Transform player;
     //NavMeshAgent
     private NavMeshAgent navMeshAgent;
+    //Damage
+    [SerializeField]
+    private int damageToPlayer = 5;
 
     void Awake()
     {
@@ -39,7 +42,7 @@ public class Enemy : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             //PlayerのHPを減らす
-            other.transform.GetComponent<Player>().Damage();
+            other.transform.GetComponent<Player>().Damage(damageToPlayer);
             //自機を削除
             Destroy(this.gameObject);
         }

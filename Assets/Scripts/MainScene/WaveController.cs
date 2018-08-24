@@ -57,9 +57,9 @@ public class WaveController : MonoBehaviour
 
     //UI
     [SerializeField]
-    private Text waveText;
+    private Text[] waveTextGroup;
     [SerializeField]
-    private Text waveCountDownText;
+    private Text[] waveCountDownTextGroup;
 
 	// Use this for initialization
 	void Awake ()
@@ -81,7 +81,7 @@ public class WaveController : MonoBehaviour
         switch (waveState)
         {
             case WaveState.Waiting:
-                waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
+                SetWaveText();
                 waveTimer = secondsPerWave;
                 break;
 
@@ -90,7 +90,7 @@ public class WaveController : MonoBehaviour
                 if (nowWave <= numOfWaves)
                 {
                     timeForSpawnEnemy = secondsPerWave / enemysOfWaves[nowWave - 1];
-                    waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
+                    SetWaveText();
                     waveTimer = secondsPerWave;
                     waveState = WaveState.WaveStart;
                 }
@@ -129,7 +129,7 @@ public class WaveController : MonoBehaviour
             waveState = WaveState.WaveStandBy;
         }
 
-        waveCountDownText.text = waveTimer.ToString("00.00");
+        SetWaveCountDownText();
     }
 
     /// <summary>
@@ -141,8 +141,24 @@ public class WaveController : MonoBehaviour
         enemySpawnTimer += Time.deltaTime;
         if(enemySpawnTimer >= spawnTime)
         {
-            enemySpawn.SpawnEnemyInRandomPos();
+            enemySpawn.SpawnEnemy();
             enemySpawnTimer = 0;
+        }
+    }
+
+    private void SetWaveText()
+    {
+        foreach (var waveText in waveTextGroup)
+        {
+            waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
+        }
+    }
+
+    private void SetWaveCountDownText()
+    {
+        foreach(var waveCountDownText in waveCountDownTextGroup)
+        {
+            waveCountDownText.text = waveTimer.ToString("00.00"); ;
         }
     }
 }
