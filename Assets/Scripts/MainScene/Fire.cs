@@ -10,13 +10,14 @@ public class Fire : MonoBehaviour
     //Destroyメソッド呼んだか？
     private bool isCallDestory = false;
 
+    private Player player;
     private AudioSource audioSource;
 
     // Use this for initialization
     void Start ()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         audioSource = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
@@ -39,6 +40,7 @@ public class Fire : MonoBehaviour
         if (other.gameObject.tag == "Enemy")//敵に当たった
         {
             audioSource.Play();
+            player.AddKilledEnemy();
             Destroy(other.gameObject);
         }
     }

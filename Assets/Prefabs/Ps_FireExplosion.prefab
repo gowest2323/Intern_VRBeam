@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 135814764609201732}
   m_Layer: 14
   m_Name: Ps_FireExplosion
-  m_TagString: Untagged
+  m_TagString: Fire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

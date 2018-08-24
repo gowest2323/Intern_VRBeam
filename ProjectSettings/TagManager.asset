@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - FieldItem
   - Enemy
+  - Fire
   layers:
   - Default
   - TransparentFX

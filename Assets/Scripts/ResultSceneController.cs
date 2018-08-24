@@ -8,11 +8,15 @@ using UnityEngine.UI;
 /// </summary>
 public class ResultSceneController : SceneController
 {
-    //エンディング
+    //生きたWAVE数
     private int livedWave = 0;
+    //倒した敵数
+    private int killedEnemy = 0;
     //リザルトテキストOGJ
     [SerializeField]
     private Text waveResultText;
+    [SerializeField]
+    private Text killedEnemyText;
     private Player player;
 
 	// Use this for initialization
@@ -39,6 +43,7 @@ public class ResultSceneController : SceneController
             case SceneState.SceneStandby:
                 CheckLivedWave();
                 waveResultText.text = "Wave " + livedWave.ToString("000") + " まで生き残れました！";
+                killedEnemyText.text = "敵を " + killedEnemy + " 体倒しました！";
                 //Idle
                 player.PlayerAnim.SetInteger("AnimIndex", 2);
 
@@ -60,6 +65,7 @@ public class ResultSceneController : SceneController
         if(PlayerPrefs.GetInt(waveNumPrefsKey) != 0)
         {
             livedWave = PlayerPrefs.GetInt(waveNumPrefsKey);
+            killedEnemy = PlayerPrefs.GetInt(killedEnemyPrefsKey);
             Debug.Log(livedWave);
         }
         else

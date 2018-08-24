@@ -61,6 +61,8 @@ public class WaveController : MonoBehaviour
     private Text[] waveTextGroup;
     [SerializeField]
     private Text[] waveCountDownTextGroup;
+    [SerializeField]
+    private Text[] numOfKilledEnemyTextGroup;
 
 	// Use this for initialization
 	void Awake ()
@@ -93,6 +95,7 @@ public class WaveController : MonoBehaviour
             case WaveState.WaveStart:
                 WaveCountDown();
                 EnemySpawnPerTime(timeForSpawnEnemy);
+                SetKilledEnemyText();
                 break;
 
             case WaveState.AllWaveFinish:
@@ -148,7 +151,15 @@ public class WaveController : MonoBehaviour
     {
         foreach(var waveCountDownText in waveCountDownTextGroup)
         {
-            waveCountDownText.text = waveTimer.ToString("00.00"); ;
+            waveCountDownText.text = waveTimer.ToString("00.00");
+        }
+    }
+
+    private void SetKilledEnemyText()
+    {
+        foreach (var killedEnemyText in numOfKilledEnemyTextGroup)
+        {
+            killedEnemyText.text = "Killed : " + player.NumOfKilledEnemy.ToString("000");
         }
     }
 }

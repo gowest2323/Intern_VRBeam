@@ -10,10 +10,6 @@ public class Beam : MonoBehaviour
     //目の位置
     private Transform centerEyeAnchor;
 
-    //ビーム最大距離
-    [SerializeField]
-    private float maxDistance = 100.0f;
-
     //パーティクルシステム
     private ParticleSystem laserParticleSystem;
     public ParticleSystem LaserParticleSystem

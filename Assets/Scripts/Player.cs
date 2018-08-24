@@ -43,6 +43,13 @@ public class Player : MonoBehaviour
     //止まっているか？
     private bool isLaserStoped = true;
 
+    //倒した敵数
+    private int numOfKilledEnemy = 0;
+    public int NumOfKilledEnemy
+    {
+        get { return numOfKilledEnemy; }
+    }
+
     //アニメーター
     private Animator animator;
     public Animator PlayerAnim
@@ -105,12 +112,18 @@ public class Player : MonoBehaviour
         hp -= damage;
     }
 
+    public void AddKilledEnemy()
+    {
+        numOfKilledEnemy++;
+        Debug.Log(numOfKilledEnemy + " Killed");
+    }
+
     private void LaserBeam()
     {
         if (isShootable)
         {
             //トリガーをおしたら
-            if (/*Input.GetKey(KeyCode.Space) ||*/ OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))//トリガー長押し
+            if (Input.GetKey(KeyCode.Space) || OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))//トリガー長押し
             {
                 ShootBeam();
             }

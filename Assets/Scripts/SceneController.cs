@@ -22,6 +22,9 @@ public class SceneController : MonoBehaviour
     //プレイヤーが生きたWAVE数prefsキー
     [HideInInspector]
     public string waveNumPrefsKey = "WaveNumPlayerLive";
+    //倒した敵数prefsキー
+    [HideInInspector]
+    public string killedEnemyPrefsKey = "KilledEnemy";
 
     [HideInInspector]
     public SceneState sceneState = SceneState.SceneStart;

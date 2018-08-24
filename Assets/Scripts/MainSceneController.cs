@@ -28,6 +28,10 @@ public class MainSceneController : SceneController
         {
             PlayerPrefs.DeleteKey(waveNumPrefsKey);
         }
+        if (PlayerPrefs.HasKey(killedEnemyPrefsKey))
+        {
+            PlayerPrefs.DeleteKey(killedEnemyPrefsKey);
+        }
     }
 
     // Update is called once per frame
@@ -50,6 +54,7 @@ public class MainSceneController : SceneController
                 if (player.Hp <= 0)
                 {
                     PlayerPrefs.SetInt(waveNumPrefsKey, waveController.NowWave);
+                    PlayerPrefs.SetInt(killedEnemyPrefsKey, player.NumOfKilledEnemy);
 
                     isNowSceneFinish = true;
                 }
