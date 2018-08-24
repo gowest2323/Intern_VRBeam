@@ -465,7 +465,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WAVE : 1/3'
+  m_Text: 'WAVE : 000'
 --- !u!222 &301088448
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -643,81 +643,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 23165ed46f3323a48bfab3222105ed05, type: 3}
   m_IsPrefabParent: 0
---- !u!1 &486417908
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 486417909}
-  - component: {fileID: 486417911}
-  - component: {fileID: 486417910}
-  m_Layer: 5
-  m_Name: WaveText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &486417909
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 486417908}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3}
-  m_LocalScale: {x: 0.003, y: 0.003, z: 0.003}
-  m_Children:
-  - {fileID: 2120049116}
-  m_Father: {fileID: 1785109505}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 49.282, y: -49.553}
-  m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &486417910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 486417908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'WAVE : 1/5'
---- !u!222 &486417911
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 486417908}
 --- !u!1 &491689423
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +688,6 @@ GameObject:
   - component: {fileID: 503453817}
   - component: {fileID: 503453814}
   - component: {fileID: 503453816}
-  - component: {fileID: 503453818}
   - component: {fileID: 503453819}
   m_Layer: 0
   m_Name: GameController
@@ -783,10 +707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652161497917bc94eb392e33a5a9db34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfWaves: 3
   secondsPerWave: 30
   originEnemyAmount: 10
-  enemyPlusPerWave: 10
+  enemyPlusPerWave: 5
   nowWave: 0
   waveTimer: 0
   timeForSpawnEnemy: 0
@@ -844,22 +767,9 @@ MonoBehaviour:
   isNowSceneFinish: 0
   gameLoad: {fileID: 0}
   endingPrefsKey: Ending
+  waveNumPrefsKey: WaveNumPlayerLive
   sceneState: 0
   eyeTracking: {fileID: 0}
---- !u!114 &503453818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 503453813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c59fa8cf6e1ea484eacb255016062007, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemForLook: []
-  selectionBar: {fileID: 637838451}
-  secondsToFill: 2.5
 --- !u!82 &503453819
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1010,11 +920,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 270501c6f30f4264bb4cb009bc26e7d3, type: 3}
   m_IsPrefabParent: 0
---- !u!224 &637838451 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224101892470955192, guid: cbbf02509f92c644a8d8a2253c93639a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1792861193}
 --- !u!1 &653657323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1348,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WAVE : 1/3'
+  m_Text: 'WAVE : 000'
 --- !u!222 &919624168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1518,7 +1423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WAVE : 1/3'
+  m_Text: 'WAVE : 000'
 --- !u!222 &960022579
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1595,7 +1500,7 @@ RectTransform:
   - {fileID: 671408154}
   - {fileID: 491689424}
   m_Father: {fileID: 1785109505}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1870,7 +1775,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'WAVE : 1/3'
+  m_Text: 'WAVE : 000'
 --- !u!222 &1135970374
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2264,7 +2169,7 @@ RectTransform:
   - {fileID: 258723523}
   - {fileID: 6353664}
   m_Father: {fileID: 1785109505}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -6067,7 +5972,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 486417909}
   - {fileID: 1507672304}
   - {fileID: 987596736}
   m_Father: {fileID: 1792861194}
@@ -6565,80 +6469,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2025068805}
---- !u!1 &2120049115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2120049116}
-  - component: {fileID: 2120049118}
-  - component: {fileID: 2120049117}
-  m_Layer: 5
-  m_Name: WaveCountDown
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2120049116
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2120049115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 486417909}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -50, y: -40}
-  m_SizeDelta: {x: 100, y: 50}
-  m_Pivot: {x: 0.5, y: 0}
---- !u!114 &2120049117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2120049115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 00.00
---- !u!222 &2120049118
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2120049115}
 --- !u!1 &2120894115
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,6 @@ using UnityEngine.UI;
 /// </summary>
 public class WaveController : MonoBehaviour
 {
-    //WAVE数
-    [SerializeField]
-    private int numOfWaves = 5;
     //WAVEの時間
     [SerializeField]
     private float secondsPerWave = 30.0f;
@@ -21,12 +18,14 @@ public class WaveController : MonoBehaviour
     //上乗せする敵の数
     [SerializeField]
     private int enemyPlusPerWave= 10;
-    //各WAVEの敵の数
-    private List<int> enemysOfWaves;
 
     //今のWAVE数
     [SerializeField]
     private int nowWave = 0;
+    public int NowWave
+    {
+        get { return nowWave; }
+    }
     //WAVEタイマー
     [SerializeField]
     private float waveTimer = 0;
@@ -52,8 +51,10 @@ public class WaveController : MonoBehaviour
         set { waveState = value; }
     }
 
-    private EnemySpawn enemySpawn;
+    //プレイヤー
     private Player player;
+    //敵生成
+    private EnemySpawn enemySpawn;
 
     //UI
     [SerializeField]
@@ -64,12 +65,6 @@ public class WaveController : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
     {
-        enemysOfWaves = new List<int>();
-        for (int i = 0; i < numOfWaves; i++)
-        {
-            enemysOfWaves.Add(originEnemyAmount + i * enemyPlusPerWave);
-        }
-
         enemySpawn = GetComponentInChildren<EnemySpawn>();
         waveTimer = secondsPerWave;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -87,17 +82,12 @@ public class WaveController : MonoBehaviour
 
             case WaveState.WaveStandBy:
                 nowWave++;
-                if (nowWave <= numOfWaves)
-                {
-                    timeForSpawnEnemy = secondsPerWave / enemysOfWaves[nowWave - 1];
-                    SetWaveText();
-                    waveTimer = secondsPerWave;
-                    waveState = WaveState.WaveStart;
-                }
-                else
-                {
-                    waveState = WaveState.AllWaveFinish;
-                }
+
+                timeForSpawnEnemy = secondsPerWave / (originEnemyAmount + (nowWave - 1) * enemyPlusPerWave);
+                SetWaveText();
+                waveTimer = secondsPerWave;
+                waveState = WaveState.WaveStart;
+
                 break;
 
             case WaveState.WaveStart:
@@ -150,7 +140,7 @@ public class WaveController : MonoBehaviour
     {
         foreach (var waveText in waveTextGroup)
         {
-            waveText.text = "WAVE : " + nowWave + "/" + numOfWaves;
+            waveText.text = "WAVE : " + nowWave.ToString("000");
         }
     }
 

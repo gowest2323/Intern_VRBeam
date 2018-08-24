@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// リザルトシーンコントローラー
@@ -8,19 +9,17 @@ using UnityEngine;
 public class ResultSceneController : SceneController
 {
     //エンディング
-    private string end = "";
+    private int livedWave = 0;
     //リザルトテキストOGJ
     [SerializeField]
-    private Transform resultTextTrfm;
-    [SerializeField]
-    private Sprite[] endMats;
+    private Text waveResultText;
     private Player player;
 
 	// Use this for initialization
 	public override void Start ()
     {
         base.Start();
-        sceneState = SceneState.CheckEnd;
+        sceneState = SceneState.SceneStandby;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -37,21 +36,12 @@ public class ResultSceneController : SceneController
 
         switch (sceneState)
         {
-            case SceneState.CheckEnd:
-                CheckEnd();
-                //Endに沿って演出を変更
-                if (end == "GameClear")
-                {
-                    resultTextTrfm.GetComponent<SpriteRenderer>().sprite = endMats[0];
-                    //Idle
-                    player.PlayerAnim.SetInteger("AnimIndex", 2);
-                }
-                else if (end == "GameOver")
-                {
-                    resultTextTrfm.GetComponent<SpriteRenderer>().sprite = endMats[1];
-                    //AOQ_Idle
-                    player.PlayerAnim.SetInteger("AnimIndex", 18);
-                }
+            case SceneState.SceneStandby:
+                CheckLivedWave();
+                waveResultText.text = "Wave " + livedWave.ToString("000") + " まで生き残れました！";
+                //Idle
+                player.PlayerAnim.SetInteger("AnimIndex", 2);
+
                 sceneState = SceneState.SceneStart;
                 break;
 
@@ -63,18 +53,18 @@ public class ResultSceneController : SceneController
 
 
     /// <summary>
-    /// どのエンドなのかをチェック
+    /// どのWAVEまで生きたのかをチェック
     /// </summary>
-    private void CheckEnd()
+    private void CheckLivedWave()
     {
-        if(PlayerPrefs.GetString(endingPrefsKey) != "")
+        if(PlayerPrefs.GetInt(waveNumPrefsKey) != 0)
         {
-            end = PlayerPrefs.GetString(endingPrefsKey);
-            Debug.Log(end);
+            livedWave = PlayerPrefs.GetInt(waveNumPrefsKey);
+            Debug.Log(livedWave);
         }
         else
         {
-            Debug.Log("エンドが保存してない");
+            Debug.Log("0 WAVE");
         }
     }
 

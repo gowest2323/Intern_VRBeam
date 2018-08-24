@@ -19,16 +19,19 @@ public class SceneController : MonoBehaviour
     //エンディングprefsキー
     [HideInInspector]
     public string endingPrefsKey = "Ending";
+    //プレイヤーが生きたWAVE数prefsキー
+    [HideInInspector]
+    public string waveNumPrefsKey = "WaveNumPlayerLive";
 
     [HideInInspector]
     public SceneState sceneState = SceneState.SceneStart;
     public enum SceneState
     {
-        SceneStart, //シーン開始(フェードイン)
-        Defalt,     //基準状態
-        SceneEnd,   //シーン終了(フェードアウト)
-        ToNextScene,//次のシーンに移行(ロード処理)
-        CheckEnd    //リザルトシーン用エンディング条件チェック
+        SceneStart,  //シーン開始(フェードイン)
+        Defalt,      //基準状態
+        SceneEnd,    //シーン終了(フェードアウト)
+        ToNextScene, //次のシーンに移行(ロード処理)
+        SceneStandby //前置作業
     }
 
     [HideInInspector]

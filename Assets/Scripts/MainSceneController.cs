@@ -23,10 +23,10 @@ public class MainSceneController : SceneController
         waveController = GetComponent<WaveController>();
         audioSource = GetComponent<AudioSource>();
 
-        //エンディング初期化
-        if (PlayerPrefs.HasKey(endingPrefsKey))
+        //前の記録があったら初期化
+        if (PlayerPrefs.HasKey(waveNumPrefsKey))
         {
-            PlayerPrefs.DeleteKey(endingPrefsKey);
+            PlayerPrefs.DeleteKey(waveNumPrefsKey);
         }
     }
 
@@ -49,16 +49,9 @@ public class MainSceneController : SceneController
 
                 if (player.Hp <= 0)
                 {
-                    PlayerPrefs.SetString(endingPrefsKey, "GameOver");
+                    PlayerPrefs.SetInt(waveNumPrefsKey, waveController.NowWave);
+
                     isNowSceneFinish = true;
-                }
-                else
-                {
-                    if(waveController.NowWaveState == WaveController.WaveState.AllWaveFinish)
-                    {
-                        PlayerPrefs.SetString(endingPrefsKey, "GameClear");
-                        isNowSceneFinish = true;
-                    }
                 }
                 break;
         }
