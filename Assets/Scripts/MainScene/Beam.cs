@@ -23,15 +23,12 @@ public class Beam : MonoBehaviour
     [SerializeField]
     private GameObject damageEffectOBJ;
 
-    private AudioSource audioSource;
-
     // Use this for initialization
     void Awake ()
     {
         centerEyeAnchor = transform.parent;
         laserParticleSystem = GetComponent<ParticleSystem>();
         particleCollisionEvents = new List<ParticleCollisionEvent>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -74,7 +71,6 @@ public class Beam : MonoBehaviour
         }
         else if(other.gameObject.tag == "Enemy")//敵に当たった
         {
-            //audioSource.Play();
             laserParticleSystem.GetCollisionEvents(other, particleCollisionEvents);
 
             foreach (var colEvent in particleCollisionEvents)
@@ -82,7 +78,6 @@ public class Beam : MonoBehaviour
                 Vector3 pos = colEvent.intersection;
                 SpawnFire(pos);
             }
-
         }
     }
 }

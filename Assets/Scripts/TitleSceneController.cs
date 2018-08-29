@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class TitleSceneController : SceneController
 {
+
     // Use this for initialization
     public override void Start()
     {
+        scenes = Scenes.Title;
         base.Start();
     }
 

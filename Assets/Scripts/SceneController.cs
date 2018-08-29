@@ -39,6 +39,17 @@ public class SceneController : MonoBehaviour
 
     [HideInInspector]
     public EyeTracking eyeTracking;
+    [HideInInspector]
+    public Ranking ranking;
+
+    [HideInInspector]
+    public Scenes scenes;
+    public enum Scenes
+    {
+        Title,
+        Main,
+        Result
+    }
 
 
     // Use this for initialization
@@ -47,6 +58,7 @@ public class SceneController : MonoBehaviour
         fadeController = GameObject.FindGameObjectWithTag("FadeController").GetComponent<FadeController>();
         gameLoad = GetComponent<GameLoad>();
         eyeTracking = GetComponent<EyeTracking>();
+        ranking = GetComponent<Ranking>();
     }
 
     // Update is called once per frame
@@ -66,6 +78,10 @@ public class SceneController : MonoBehaviour
                 }
                 else
                 {
+                    if(scenes == Scenes.Title)
+                    {
+                        ranking.RANK_STATUS = Ranking.RankStatus.Loading;
+                    }
                     sceneState = SceneState.Defalt;
                 }
                 break;

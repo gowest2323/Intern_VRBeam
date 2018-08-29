@@ -26,9 +26,12 @@ public class EyeTracking : MonoBehaviour
         get { return isNowLookingItemSelect; }
     }
 
+    private AudioSource audioSE;
+
     // Use this for initialization
     void Start ()
     {
+        audioSE = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -41,6 +44,7 @@ public class EyeTracking : MonoBehaviour
         if (selectionBar.GetComponent<Image>().fillAmount >= 1 &&
             (Input.GetKeyDown(KeyCode.A) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)))
         {
+            audioSE.Play();
             isNowLookingItemSelect = true;
         }
     }

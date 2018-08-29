@@ -19,9 +19,10 @@ public class ResultSceneController : SceneController
     private Text killedEnemyText;
     private Player player;
 
-	// Use this for initialization
-	public override void Start ()
+    // Use this for initialization
+    public override void Start ()
     {
+        scenes = Scenes.Result;
         base.Start();
         sceneState = SceneState.SceneStandby;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -74,6 +75,9 @@ public class ResultSceneController : SceneController
         }
     }
 
+    /// <summary>
+    /// もう一回遊ぶかをチェック
+    /// </summary>
     private void CheckIsOneMorePlay()
     {
         if (eyeTracking.IsNowLookingItemSelect)

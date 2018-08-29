@@ -880,6 +880,7 @@ MonoBehaviour:
   gameLoad: {fileID: 0}
   endingPrefsKey: Ending
   waveNumPrefsKey: WaveNumPlayerLive
+  killedEnemyPrefsKey: KilledEnemy
   sceneState: 0
   eyeTracking: {fileID: 0}
 --- !u!82 &503453819
@@ -2577,7 +2578,6 @@ GameObject:
   - component: {fileID: 1664648582}
   - component: {fileID: 1664648581}
   - component: {fileID: 1664648584}
-  - component: {fileID: 1664648585}
   m_Layer: 0
   m_Name: LaserBeam
   m_TagString: Untagged
@@ -2699,7 +2699,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 137504968
+  randomSeed: 994961572
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6026,86 +6026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageEffectOBJ: {fileID: 1999179703660914, guid: 5edd0e0387fee2e4c995683fe1ca01c7,
     type: 2}
---- !u!82 &1664648585
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1664648580}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 65c28304bb374c5459c3efccdd7e45b6, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!4 &1683115346 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
@@ -6242,7 +6162,8 @@ MonoBehaviour:
   enemyPrafbs:
   - {fileID: 1377492532307794, guid: 03652d7ff3f38cb4592dffe448d130f6, type: 2}
   - {fileID: 1194518836404094, guid: b7bd2caeb24c3a44c851aeb3a6048afa, type: 2}
-  percentForSpawnStrong: 30
+  - {fileID: 1051396999326408, guid: f56a691833ff64c48a3bc4dffe67f500, type: 2}
+  enemySpawnPercentage: 3c0000001e0000000a000000
 --- !u!1 &1776935648
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,21 +15,28 @@ public class EnemySpawn : MonoBehaviour
 
     enum EnemyType
     {
-        Normal,
-        Strong
+        Normal, // ダメージ小・速度中
+        Strong, // ダメージ中・速度高
+        Big     // ダメージ大・速度低
     }
 
-    //強い敵の生成確率
+    //敵の生成確率(Editorで設定)
     [SerializeField]
-    private int percentForSpawnStrong = 30;
+    private int[] enemySpawnPercentage;
+    //コード用の計算確率
+    private List<int> enemySpawnPercentageList;
 
-    	// Use this for initialization
-	void Start ()
+
+    // Use this for initialization
+    void Start ()
     {
         enemySpawnPosList = new List<Vector3>();
         //木の位置を使う
         enemySpawnPosList = transform.parent.GetComponentInChildren<TreeSpawn>().TreePositionList;
-	}
+
+        enemySpawnPercentageList = new List<int>();
+        SetEnemySpawnPercentage();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -46,16 +53,38 @@ public class EnemySpawn : MonoBehaviour
         //生成タイプパーセンテージ
         int enemyTypePercentage = Random.Range(0, 100);
 
-        if (enemyTypePercentage <= percentForSpawnStrong - 1)
+        //Big >> Strong >> Normal
+        for (int i = enemyPrafbs.Length - 1; i >= 0; i--)
         {
-            //設定した確率でで強い敵生成
-            Instantiate(enemyPrafbs[(int)EnemyType.Strong], enemySpawnPosList[randomIndex], Quaternion.identity);
+            //0-9 >> 10-39 >> 40-99
+            if (enemyTypePercentage <= enemySpawnPercentageList[i] - 1)
+            {
+                //敵生成
+                Instantiate(enemyPrafbs[(int)i], enemySpawnPosList[randomIndex], Quaternion.identity);
+                break;
+            }
         }
-        else
-        {
-            //ノーマル敵生成
-            Instantiate(enemyPrafbs[(int)EnemyType.Normal], enemySpawnPosList[randomIndex], Quaternion.identity);
-        }
+    }
 
+    /// <summary>
+    /// 敵の生成確率を設定
+    /// </summary>
+    private void SetEnemySpawnPercentage()
+    {
+        //60.30.10
+        for(int i = 0; i < enemySpawnPercentage.Length; i++)
+        {
+            int tmp = 0;
+            for (int j = 0; j < enemySpawnPercentage.Length; j++)
+            {
+                //0-012・1-12・2-2
+                if (j <= i - 1)
+                {
+                    continue;
+                }
+                tmp += enemySpawnPercentage[j];
+            }
+            enemySpawnPercentageList.Add(tmp);
+        }
     }
 }

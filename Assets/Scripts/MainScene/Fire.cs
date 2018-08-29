@@ -10,6 +10,9 @@ public class Fire : MonoBehaviour
     //Destroyメソッド呼んだか？
     private bool isCallDestory = false;
 
+    [SerializeField]
+    private AudioClip[] explosionSE;
+
     private Player player;
     private AudioSource audioSource;
 
@@ -39,7 +42,9 @@ public class Fire : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")//敵に当たった
         {
-            audioSource.Play();
+            int randomSEIndex = Random.Range(0, explosionSE.Length);
+            audioSource.PlayOneShot(explosionSE[randomSEIndex]);
+
             player.AddKilledEnemy();
             Destroy(other.gameObject);
         }
