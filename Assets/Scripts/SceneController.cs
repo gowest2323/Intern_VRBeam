@@ -80,7 +80,11 @@ public class SceneController : MonoBehaviour
                 {
                     if(scenes == Scenes.Title)
                     {
-                        ranking.RANK_STATUS = Ranking.RankStatus.Loading;
+                        ranking.RANKING_STATE = Ranking.RankingState.Loading;
+                    }
+                    else if(scenes == Scenes.Result)
+                    {
+                        ranking.RANKING_STATE = Ranking.RankingState.Publishing;
                     }
                     sceneState = SceneState.Defalt;
                 }

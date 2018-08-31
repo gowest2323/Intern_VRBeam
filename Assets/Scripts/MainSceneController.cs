@@ -17,7 +17,7 @@ public class MainSceneController : SceneController
     // Use this for initialization
     public override void Start()
     {
-        scenes = Scenes.Title;
+        scenes = Scenes.Main;
         base.Start();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

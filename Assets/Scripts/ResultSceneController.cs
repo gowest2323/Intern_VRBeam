@@ -17,7 +17,16 @@ public class ResultSceneController : SceneController
     private Text waveResultText;
     [SerializeField]
     private Text killedEnemyText;
+    [SerializeField]
+    private GameObject oneMoreTextOBJ;
+    [SerializeField]
+    private Text rankingUpdateText;
+
+    private bool isOneMoreTextShowed = false;
+
     private Player player;
+
+    
 
     // Use this for initialization
     public override void Start ()
@@ -42,7 +51,8 @@ public class ResultSceneController : SceneController
         switch (sceneState)
         {
             case SceneState.SceneStandby:
-                CheckLivedWave();
+                CheckPlayResult();
+                SetPlayResultToRanking();
                 waveResultText.text = "Wave " + livedWave.ToString("000") + " まで生き残れました！";
                 killedEnemyText.text = "敵を " + killedEnemy + " 体倒しました！";
                 //Idle
@@ -52,7 +62,23 @@ public class ResultSceneController : SceneController
                 break;
 
             case SceneState.Defalt:
+                if (!isOneMoreTextShowed)
+                {
+                    StartCoroutine(ShowOneMoreText());
+                    isOneMoreTextShowed = true;
+                }
+
                 CheckIsOneMorePlay();
+
+                //if (ranking.RANKING_STATE == Ranking.RankingState.Finish)
+                //{
+                //    if (oneMoreTextOBJ.active == false)
+                //    {
+                //        rankingUpdateText.enabled = false;
+                //        oneMoreTextOBJ.SetActive(true);
+                //    }
+                //    CheckIsOneMorePlay();
+                //}
                 break;
         }
     }
@@ -61,7 +87,7 @@ public class ResultSceneController : SceneController
     /// <summary>
     /// どのWAVEまで生きたのかをチェック
     /// </summary>
-    private void CheckLivedWave()
+    private void CheckPlayResult()
     {
         if(PlayerPrefs.GetInt(waveNumPrefsKey) != 0)
         {
@@ -95,6 +121,22 @@ public class ResultSceneController : SceneController
                 isNowSceneFinish = true;
             }
         }
+    }
+
+    private void SetPlayResultToRanking()
+    {
+        ranking.KilledEnemy = killedEnemy;
+        ranking.LivedEnemy = livedWave;
+    }
+
+    private IEnumerator ShowOneMoreText()
+    {
+        rankingUpdateText.text = "記録更新完了！";
+
+        yield return new WaitForSeconds(2f);
+
+        rankingUpdateText.enabled = false;
+        oneMoreTextOBJ.SetActive(true);
     }
 
 }
