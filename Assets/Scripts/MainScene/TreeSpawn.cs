@@ -9,7 +9,7 @@ public class TreeSpawn : MonoBehaviour
 {
     //半径
     [SerializeField]
-    private float radius = 10;
+    private float spawnRadius = 10;
     //木の数
     [SerializeField]
     private int numOfTree = 100;
@@ -28,7 +28,7 @@ public class TreeSpawn : MonoBehaviour
     {
         treePositionList = new List<Vector3>();
         Spawn();
-        MakeChildrenPositoinToCircle();
+        MakeChildrenPositoinToCircle(spawnRadius);
     }
 
     // Update is called once per frame
@@ -42,7 +42,11 @@ public class TreeSpawn : MonoBehaviour
         }
     }
 
-    private void MakeChildrenPositoinToCircle()
+    /// <summary>
+    /// 子供OBJの位置を円状に
+    /// </summary>
+    /// <param name="radius"></param>
+    private void MakeChildrenPositoinToCircle(float radius)
     {
         List<GameObject> childList = new List<GameObject>();
         foreach (Transform child in transform)

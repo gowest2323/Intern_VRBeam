@@ -26,14 +26,14 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        DestroySelfWhenTimeUp();
+        DestroySelfWhenTimeUp(liveTime);
     }
 
-    private void DestroySelfWhenTimeUp()
+    private void DestroySelfWhenTimeUp(float time)
     {
         if (!isCallDestory)
         {
-            Destroy(this.gameObject, liveTime);
+            Destroy(this.gameObject, time);
             isCallDestory = true;
         }
     }

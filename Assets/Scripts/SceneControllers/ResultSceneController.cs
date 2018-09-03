@@ -63,14 +63,7 @@ public class ResultSceneController : SceneController
                 break;
 
             case SceneState.Defalt:
-                //if (!isOneMoreTextShowed)
-                //{
-                //    StartCoroutine(ShowOneMoreText());
-                //    isOneMoreTextShowed = true;
-                //}
-
-                //CheckIsOneMorePlay();
-
+                //更新完了してからシーン遷移を可能に
                 if (ranking.RANKING_STATE == Ranking.RankingState.UpdateFinish)
                 {
                     if (!isOneMoreTextShowed)
@@ -102,7 +95,7 @@ public class ResultSceneController : SceneController
     /// </summary>
     private void CheckIsOneMorePlay()
     {
-        if (eyeTracking.IsNowLookingItemSelect)
+        if (eyeTracking.IsNowLookingItemSelected)
         {
             //ONEMORE? -> YES
             if (eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.Yes)

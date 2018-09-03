@@ -31,7 +31,7 @@ public class EnemySpawn : MonoBehaviour
     void Start ()
     {
         enemySpawnPosList = new List<Vector3>();
-        //木の位置を使う
+        //木の生成位置を使う
         enemySpawnPosList = transform.parent.GetComponentInChildren<TreeSpawn>().TreePositionList;
 
         enemySpawnPercentageList = new List<int>();
@@ -77,8 +77,8 @@ public class EnemySpawn : MonoBehaviour
             int tmp = 0;
             for (int j = 0; j < enemySpawnPercentage.Length; j++)
             {
-                //0-012・1-12・2-2
-                if (j <= i - 1)
+                //i0-j012・i1-j12・i2-j2
+                if (j < i )
                 {
                     continue;
                 }

@@ -43,6 +43,8 @@ public class MainSceneController : SceneController
 
     public override void UpdateWithSceneState()
     {
+        base.UpdateWithSceneState();
+
         switch (sceneState)
         {
             case SceneState.Defalt:
@@ -62,6 +64,5 @@ public class MainSceneController : SceneController
                 break;
         }
 
-        base.UpdateWithSceneState();
     }
 }

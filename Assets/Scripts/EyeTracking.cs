@@ -8,7 +8,8 @@ public class EyeTracking : MonoBehaviour
 {
     //視線入力アイテム
     [SerializeField]
-    private Transform[] itemForLook;
+    private Transform[] itemsForLook;
+    //今見ているアイテム
     private Transform nowLookingItem;
     public Transform NowLookingItem
     {
@@ -20,10 +21,10 @@ public class EyeTracking : MonoBehaviour
     [SerializeField]
     private float secondsToFill = 2.5f;
 
-    private bool isNowLookingItemSelect = false;
-    public bool IsNowLookingItemSelect
+    private bool isNowLookingItemSelected = false;
+    public bool IsNowLookingItemSelected
     {
-        get { return isNowLookingItemSelect; }
+        get { return isNowLookingItemSelected; }
     }
 
     private AudioSource audioSE;
@@ -38,20 +39,23 @@ public class EyeTracking : MonoBehaviour
 	void Update ()
     {
         FindNowLookingItem();
-        FillingSelectionBar();
+        FillSelectionBar();
 
         //  ゲージ満タンかつトリガーを押した
         if (selectionBar.GetComponent<Image>().fillAmount >= 1 &&
             (Input.GetKeyDown(KeyCode.A) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)))
         {
             audioSE.Play();
-            isNowLookingItemSelect = true;
+            isNowLookingItemSelected = true;
         }
     }
 
+    /// <summary>
+    /// 今注目しているアイテムを格納
+    /// </summary>
     private void FindNowLookingItem()
     {
-        foreach(var item in itemForLook)
+        foreach(var item in itemsForLook)
         {
             if (item.GetComponent<VRInteractiveItem>().IsOver)
             {
@@ -60,7 +64,7 @@ public class EyeTracking : MonoBehaviour
         }
     }
 
-    public void FillingSelectionBar()
+    public void FillSelectionBar()
     {
         if (nowLookingItem == null) return;
 

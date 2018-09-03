@@ -23,22 +23,18 @@ public class TitleSceneController : SceneController
 
     public override void UpdateWithSceneState()
     {
+        base.UpdateWithSceneState();
+
         switch (sceneState)
         {
             case SceneState.Defalt:
                 //頭を注目して
-                if(eyeTracking.IsNowLookingItemSelect &&
-                    eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.GameStart)
+                if(eyeTracking.IsNowLookingItemSelected &&
+                   eyeTracking.NowLookingItem.GetComponent<SelectableItem>().SelectionAns == SelectableItem.SelectionAnswer.GameStart)
                 {
                     isNowSceneFinish = true;
                 }
                 break;
-
-            case SceneState.SceneEnd:
-                //たぶん飛び込みながらフェードアウト
-                break;
         }
-
-        base.UpdateWithSceneState();
     }
 }

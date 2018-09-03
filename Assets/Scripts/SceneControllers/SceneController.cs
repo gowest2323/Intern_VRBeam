@@ -16,16 +16,13 @@ public class SceneController : MonoBehaviour
     //ロード関連クラス
     [HideInInspector]
     public GameLoad gameLoad;
-    //エンディングprefsキー
-    [HideInInspector]
-    public string endingPrefsKey = "Ending";
     //プレイヤーが生きたWAVE数prefsキー
     [HideInInspector]
     public string waveNumPrefsKey = "WaveNumPlayerLive";
     //倒した敵数prefsキー
     [HideInInspector]
     public string killedEnemyPrefsKey = "KilledEnemy";
-
+    //シーン状態
     [HideInInspector]
     public SceneState sceneState = SceneState.SceneStart;
     public enum SceneState
@@ -36,9 +33,10 @@ public class SceneController : MonoBehaviour
         ToNextScene, //次のシーンに移行(ロード処理)
         SceneStandby //前置作業
     }
-
+    //目線
     [HideInInspector]
     public EyeTracking eyeTracking;
+    //ランキング
     [HideInInspector]
     public Ranking ranking;
 

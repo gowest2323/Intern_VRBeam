@@ -43,7 +43,6 @@ public class WaveController : MonoBehaviour
         Waiting,
         WaveStandBy,
         WaveStart,
-        AllWaveFinish
     }
     private WaveState waveState = WaveState.Waiting;
     public WaveState NowWaveState
@@ -91,17 +90,12 @@ public class WaveController : MonoBehaviour
                 SetWaveText();
                 waveTimer = secondsPerWave;
                 waveState = WaveState.WaveStart;
-
                 break;
 
             case WaveState.WaveStart:
                 WaveCountDown();
                 EnemySpawnPerTime(timeForSpawnEnemy);
                 SetKilledEnemyText();
-                break;
-
-            case WaveState.AllWaveFinish:
-                //ここで処理をシーンコントローラーに移す
                 break;
         }
 	}
@@ -112,11 +106,6 @@ public class WaveController : MonoBehaviour
     private void WaveCountDown()
     {
         waveTimer -= Time.deltaTime;
-
-        if(player.Hp <= 0)
-        {
-            waveState = WaveState.AllWaveFinish;
-        }
 
         if (waveTimer <= 0)
         {

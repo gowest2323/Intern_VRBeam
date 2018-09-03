@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatus : MonoBehaviour {
-
-
+public class PlayerStatus : MonoBehaviour
+{
+    //識別ID
     public string UniqueID
     {
         get
