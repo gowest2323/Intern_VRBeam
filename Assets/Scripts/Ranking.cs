@@ -29,21 +29,25 @@ public class Ranking : MonoBehaviour
     {
         Standby,
         Loading,
-        Publishing,
-        Finish
+        Updating,
+        UpdateFinish
     }
 
-    //コルーチン始まったか？
+    //DBロード始まったか？
     private bool isLoadStart = false;
-    private bool isPublishStart = false;
+    //DBアップデート始まったか？終わったか？
+    private bool isUpdateStart = false;
+    private bool isUpdateEnd = false;
 
-    //格納ディクショナリ
+    //DBから受け取ったリザルトを格納するディクショナリ
     private Dictionary<string, int> killedEnemyRankDic = new Dictionary<string, int>();
     private Dictionary<string, int> livedWavesRankDic = new Dictionary<string, int>();
 
     //タイトルランキング表示テキスト
     [SerializeField]
-    private Text[] killedEnemyRankText, livedWavesRankText;
+    private Text[] killedEnemyRankText;
+    [SerializeField]
+    private Text[] livedWavesRankText;
     //ランキングテキスト項目
     enum RankingText
     {
@@ -68,8 +72,13 @@ public class Ranking : MonoBehaviour
 
     //自分の順位テキスト
     [SerializeField]
-    private Text[] selfKilledRankText, selfLivedRankText;
+    private Text[] selfKilledRankText;
+    [SerializeField]
+    private Text[] selfLivedRankText;
 
+    //記録がない判定文
+    private string noRecord_Personal = "Don't have personal record";
+    private string noRecord_All = "Don't have any record";
 
 
     // Use this for initialization
@@ -107,25 +116,37 @@ public class Ranking : MonoBehaviour
             case RankingState.Loading:
                 if (!isLoadStart)
                 {
-                    //ランキング表示
+                    //ランキング表示->Title
                     StartCoroutine(Show(killedEnemyRank));
                     StartCoroutine(Show(livedWavesRank));
                     isLoadStart = true;
                 }
                 break;
-            case RankingState.Publishing:
-                if (!isPublishStart)
+            case RankingState.Updating:
+                if (!isUpdateStart)
                 {
+                    //ランキング更新・追加->Result
                     StartCoroutine(CheckIfRecordExist_Result(killedEnemyRank, PlayerStatus.Instance.UniqueID, killedEnemy));
                     StartCoroutine(CheckIfRecordExist_Result(livedWavesRank, PlayerStatus.Instance.UniqueID, livedWaves));
-                    isPublishStart = true;
+                    isUpdateStart = true;
+                }
+
+                if (isUpdateEnd)
+                {
+                    rankingState = RankingState.UpdateFinish;
                 }
                 break;
         }
 
     }
 
-
+    /// <summary>
+    /// DBに個人記録があるかをチェック(Result)
+    /// </summary>
+    /// <param name="ranking"></param>
+    /// <param name="guid"></param>
+    /// <param name="playerScore"></param>
+    /// <returns></returns>
     private IEnumerator CheckIfRecordExist_Result(string ranking, string guid, int playerScore)
     {
         WWWForm form = new WWWForm();
@@ -142,15 +163,14 @@ public class Ranking : MonoBehaviour
             yield break;
         }
 
-        print(result.text);
-        //記録がない
-        if (result.text.Contains("Don't have personal record"))
+        //個人記録がない
+        if (result.text.Contains(noRecord_Personal))
         {
-            //追加
             print("new record add to DB");
-
+            //追加
             yield return StartCoroutine(Submit(ranking, guid, playerScore));
         }
+        //個人記録がある
         else
         {
             var received_data = Regex.Split(result.text, ",");
@@ -158,8 +178,8 @@ public class Ranking : MonoBehaviour
             //新しい成績が以前のより高い場合
             if (playerScore > int.Parse(received_data[1]))//0->name, 1->score
             {
-                //更新
                 print("update record");
+                //更新
                 yield return StartCoroutine(Update(ranking, guid, playerScore));
             }
             else
@@ -168,12 +188,18 @@ public class Ranking : MonoBehaviour
             }
         }
 
-        //更新が終わったら自分の順位をチェック
-        yield return StartCoroutine(CheckSelfRank(ranking, guid));
+        isUpdateEnd = true;
 
-        rankingState = RankingState.Finish;
+        //更新が終わったら自分の順位をチェック
+        yield return StartCoroutine(CheckRankByGuid(ranking, guid));
     }
 
+    /// <summary>
+    /// DBに個人記録があるかをチェック(Title)
+    /// </summary>
+    /// <param name="ranking"></param>
+    /// <param name="guid"></param>
+    /// <returns></returns>
     private IEnumerator CheckIfRecordExist_Title(string ranking, string guid)
     {
         WWWForm form = new WWWForm();
@@ -190,8 +216,8 @@ public class Ranking : MonoBehaviour
             yield break;
         }
 
-        //記録がない
-        if (result.text.Contains("Don't have personal record"))
+        //個人記録がない
+        if (result.text.Contains(noRecord_Personal))
         {
             switch (ranking)
             {
@@ -204,11 +230,11 @@ public class Ranking : MonoBehaviour
                     break;
             }
         }
+        //個人記録がある
         else
         {
             //自分の順位をチェック
-            yield return StartCoroutine(CheckSelfRank(ranking, guid));
-
+            yield return StartCoroutine(CheckRankByGuid(ranking, guid));
         }
     }
 
@@ -237,7 +263,7 @@ public class Ranking : MonoBehaviour
         }
         else
         {
-            print(result.text);
+            isUpdateEnd = true;
         }
     }
 
@@ -266,7 +292,7 @@ public class Ranking : MonoBehaviour
         }
         else
         {
-            print(result.text);
+            isUpdateEnd = true;
         }
     }
 
@@ -292,9 +318,10 @@ public class Ranking : MonoBehaviour
             yield break;
         }
 
-        //記録がない
-        if (result.text.Contains("Don't have any record"))
+        //DBに何も記録がない
+        if (result.text.Contains(noRecord_All))
         {
+            //表示
             switch (ranking)
             {
                 case "KilledEnemyRanking":
@@ -314,6 +341,7 @@ public class Ranking : MonoBehaviour
             //内容の行数
             int records = (received_data.Length - 1) / 2;
 
+            //表示
             switch (ranking)
             {
                 case "KilledEnemyRanking":
@@ -330,9 +358,6 @@ public class Ranking : MonoBehaviour
             //自分の順位をチェック
             yield return StartCoroutine(CheckIfRecordExist_Title(ranking, PlayerStatus.Instance.UniqueID));
         }
-
-
-        //rankingState = RankingState.Finish;
     }
 
     /// <summary>
@@ -341,7 +366,7 @@ public class Ranking : MonoBehaviour
     /// <param name="ranking"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
-    private IEnumerator CheckSelfRank(string ranking, string guid)
+    private IEnumerator CheckRankByGuid(string ranking, string guid)
     {
         WWWForm form = new WWWForm();
         form.AddField("ranking", ranking);//ランキング種類
@@ -374,6 +399,12 @@ public class Ranking : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// PHPから受け取ったIDと点数をディクショナリに入れる
+    /// </summary>
+    /// <param name="records"></param>
+    /// <param name="data"></param>
+    /// <param name="targetDic"></param>
     private void SetRankDic(int records, string[] data, Dictionary<string, int> targetDic)
     {
         for (int i = 0; i < records; i++)
@@ -386,16 +417,17 @@ public class Ranking : MonoBehaviour
     /// ソート＆ランキング結果表示
     /// </summary>
     /// <param name="targetDic">ランキングディクショナリ</param>
-    /// <param name="rankText">ランキングテキスト</param>
+    /// <param name="rankText">ランキングテキストOBJ</param>
     private void ShowRanking(Dictionary<string, int> targetDic, Text[] rankText)
     {
-        //ソート結果をリスト化
+        //targetDicの結果を元に順位Listを作る
         List<int> rankList = new List<int>();
         var targetList = targetDic.ToList();
         rankList = GetRankList(targetList);
 
+        //Loading文字を透明に
         rankText[(int)RankingText.LoadText].transform.GetComponent<CanvasGroup>().alpha = 0;
-        //書き出す
+        //Textに順位結果を書き出す
         for (int i = 0; i < targetList.Count; i++)
         {
             SetRankText(rankText, rankList[i], targetList[i].Value);

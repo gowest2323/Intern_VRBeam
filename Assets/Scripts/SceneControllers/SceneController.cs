@@ -84,7 +84,7 @@ public class SceneController : MonoBehaviour
                     }
                     else if(scenes == Scenes.Result)
                     {
-                        ranking.RANKING_STATE = Ranking.RankingState.Publishing;
+                        ranking.RANKING_STATE = Ranking.RankingState.Updating;
                     }
                     sceneState = SceneState.Defalt;
                 }
@@ -109,7 +109,7 @@ public class SceneController : MonoBehaviour
                 break;
 
             case SceneState.ToNextScene:
-                gameLoad.LoadingStartWithoutOBJ();
+                gameLoad.LoadingStartWithOBJ();
                 break;
         }
     }

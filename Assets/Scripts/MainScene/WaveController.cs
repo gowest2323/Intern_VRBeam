@@ -19,6 +19,7 @@ public class WaveController : MonoBehaviour
     [SerializeField]
     private int enemyPlusPerWave= 10;
 
+    [Header("以下表示だけ")]
     //今のWAVE数
     [SerializeField]
     private int nowWave = 0;
@@ -56,6 +57,7 @@ public class WaveController : MonoBehaviour
     //敵生成
     private EnemySpawn enemySpawn;
 
+    [Header("UI")]
     //UI
     [SerializeField]
     private Text[] waveTextGroup;

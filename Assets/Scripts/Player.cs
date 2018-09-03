@@ -66,8 +66,6 @@ public class Player : MonoBehaviour
 
     //MainCamera
     [SerializeField]
-    private Transform cameraRig;
-    [SerializeField]
     private Transform centerEye;
 
     void Awake()
@@ -84,8 +82,6 @@ public class Player : MonoBehaviour
     }
 
 
-    float angle = 0.0F;
-    Vector3 axis = Vector3.zero;
     // Update is called once per frame
     void Update()
     {
@@ -115,7 +111,6 @@ public class Player : MonoBehaviour
     public void AddKilledEnemy()
     {
         numOfKilledEnemy++;
-        Debug.Log(numOfKilledEnemy + " Killed");
     }
 
     private void LaserBeam()

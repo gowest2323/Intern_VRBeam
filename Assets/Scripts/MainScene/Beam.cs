@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class Beam : MonoBehaviour
 {
-    //目の位置
-    private Transform centerEyeAnchor;
-
     //パーティクルシステム
     private ParticleSystem laserParticleSystem;
     public ParticleSystem LaserParticleSystem
@@ -26,7 +23,6 @@ public class Beam : MonoBehaviour
     // Use this for initialization
     void Awake ()
     {
-        centerEyeAnchor = transform.parent;
         laserParticleSystem = GetComponent<ParticleSystem>();
         particleCollisionEvents = new List<ParticleCollisionEvent>();
     }

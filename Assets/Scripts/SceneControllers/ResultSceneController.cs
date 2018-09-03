@@ -55,6 +55,7 @@ public class ResultSceneController : SceneController
                 SetPlayResultToRanking();
                 waveResultText.text = "Wave " + livedWave.ToString("000") + " まで生き残れました！";
                 killedEnemyText.text = "敵を " + killedEnemy + " 体倒しました！";
+
                 //Idle
                 player.PlayerAnim.SetInteger("AnimIndex", 2);
 
@@ -62,23 +63,23 @@ public class ResultSceneController : SceneController
                 break;
 
             case SceneState.Defalt:
-                if (!isOneMoreTextShowed)
-                {
-                    StartCoroutine(ShowOneMoreText());
-                    isOneMoreTextShowed = true;
-                }
-
-                CheckIsOneMorePlay();
-
-                //if (ranking.RANKING_STATE == Ranking.RankingState.Finish)
+                //if (!isOneMoreTextShowed)
                 //{
-                //    if (oneMoreTextOBJ.active == false)
-                //    {
-                //        rankingUpdateText.enabled = false;
-                //        oneMoreTextOBJ.SetActive(true);
-                //    }
-                //    CheckIsOneMorePlay();
+                //    StartCoroutine(ShowOneMoreText());
+                //    isOneMoreTextShowed = true;
                 //}
+
+                //CheckIsOneMorePlay();
+
+                if (ranking.RANKING_STATE == Ranking.RankingState.UpdateFinish)
+                {
+                    if (!isOneMoreTextShowed)
+                    {
+                        StartCoroutine(ShowOneMoreText());
+                        isOneMoreTextShowed = true;
+                    }
+                    CheckIsOneMorePlay();
+                }
                 break;
         }
     }
@@ -93,11 +94,6 @@ public class ResultSceneController : SceneController
         {
             livedWave = PlayerPrefs.GetInt(waveNumPrefsKey);
             killedEnemy = PlayerPrefs.GetInt(killedEnemyPrefsKey);
-            Debug.Log(livedWave);
-        }
-        else
-        {
-            Debug.Log("0 WAVE");
         }
     }
 
