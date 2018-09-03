@@ -1174,7 +1174,6 @@ MonoBehaviour:
   fadeController: {fileID: 0}
   isNowSceneFinish: 0
   gameLoad: {fileID: 0}
-  endingPrefsKey: Ending
   waveNumPrefsKey: WaveNumPlayerLive
   killedEnemyPrefsKey: KilledEnemy
   sceneState: 0
@@ -1222,7 +1221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59fa8cf6e1ea484eacb255016062007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemForLook:
+  itemsForLook:
   - {fileID: 451930849}
   - {fileID: 1498580349}
   selectionBar: {fileID: 1866942337}

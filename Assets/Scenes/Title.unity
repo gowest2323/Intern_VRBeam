@@ -768,7 +768,6 @@ MonoBehaviour:
   fadeController: {fileID: 0}
   isNowSceneFinish: 0
   gameLoad: {fileID: 0}
-  endingPrefsKey: Ending
   waveNumPrefsKey: WaveNumPlayerLive
   killedEnemyPrefsKey: KilledEnemy
   sceneState: 0
@@ -812,7 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59fa8cf6e1ea484eacb255016062007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemForLook:
+  itemsForLook:
   - {fileID: 1029836035}
   selectionBar: {fileID: 1662975174}
   secondsToFill: 2.5
@@ -1578,7 +1577,6 @@ MonoBehaviour:
   isShootable: 0
   hpBar: {fileID: 0}
   energyBar: {fileID: 0}
-  cameraRig: {fileID: 0}
   centerEye: {fileID: 0}
 --- !u!224 &909353660
 RectTransform:
